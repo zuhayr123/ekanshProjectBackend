@@ -21,10 +21,10 @@ router.post('/contacts', (req, res, next) => {
 
     newContact.save((err, contact)=>{
         if(err){
-            res.json({msg: 'failed to add contacts'});
+            res.json({msg: 'unchanged'});
         }
         else{
-            res.json({msg: 'Contact added succesfully'});
+            res.json({msg: 'changed'});
         }
     });
 });
