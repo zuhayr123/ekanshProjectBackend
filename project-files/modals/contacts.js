@@ -4,17 +4,12 @@ const mongoose = require('mongoose');
 
 
 const ContactsSchema = mongoose.Schema({
-    temperature:{
+    switchState:{
         type : String,
         required : true
     },
 
-    rpm:{
-        type : String,
-        required: true
-    },
-
-    timestamp:{
+    timeStamp:{
         type : String,
         required: true
     }

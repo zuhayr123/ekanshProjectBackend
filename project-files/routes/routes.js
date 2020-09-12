@@ -29,4 +29,15 @@ router.post('/contacts', (req, res, next) => {
     });
 });
 
+router.delete('/contacts', (req, res, next) => {
+    Contact.remove({}, function(err, result){
+        if(err){
+            res.json(err);
+        }
+        else{
+            res.json(result);
+        }
+    });
+});
+
 module.exports = router; 

@@ -13,7 +13,7 @@ const route = require('./project-files/routes/routes');
 
 // const port = 3000;
 
-const serverUrl = "https://subhash-industiries-api.herokuapp.com";
+const serverUrl = "https://android-course.herokuapp.com/";
 //connect to mongoDb
 const uri = "mongodb+srv://Zuhayr:i5tk4EIMGKfy8w0j@cluster0.aiobn.mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true });
