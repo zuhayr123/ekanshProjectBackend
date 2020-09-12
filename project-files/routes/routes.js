@@ -28,6 +28,19 @@ router.post('/contacts', (req, res, next) => {
     });
 });
 
+router.put('/contacts', (req, res, next) => {
+    var timeStamp = req.param('timeStamp');
+    Contact.updateOne({timeStamp : timeStamp}, req.body,function(erer, orders){
+
+        if(erer){
+            res.status(403).json({msg: 'Error in updating data', orders : req.body , status : 'failure'});
+        }
+        else{
+            res.json({msg : 'Order Successfully Updated', orders : req.body, status : 'success'});
+        }
+    })
+})
+
 router.delete('/contacts', (req, res, next) => {
     Contact.remove({}, function(err, result){
         if(err){
