@@ -14,7 +14,9 @@ router.get('/contacts', (req,  res , next) =>{
 //add contact
 router.post('/contacts', (req, res, next) => {
     let newContact = new Contact({
-        switchState: req.body.switchState,
+        redSwitch: req.body.redSwitch,
+        blueSwitch: req.body.blueSwitch,
+        greenSwitch: req.body.greenSwitch,
         timeStamp: req.body.timeStamp
     });
 
