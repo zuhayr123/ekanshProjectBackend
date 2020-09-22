@@ -4,7 +4,17 @@ const mongoose = require('mongoose');
 
 
 const ContactsSchema = mongoose.Schema({
-    switchState:{
+    redSwitch:{
+        type : String,
+        required : true
+    },
+
+    blueSwitch:{
+        type : String,
+        required : true
+    },
+
+    greenSwitch:{
         type : String,
         required : true
     },
