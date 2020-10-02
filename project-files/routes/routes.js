@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../modals/contacts');
+const JobRequirement = require('../modals/job.js');
+
 
 
                                                 // contacts API 
@@ -53,5 +55,24 @@ router.delete('/contacts', (req, res, next) => {
         }
     });
 });
+
+router.get('/', (req, res, next)=>{
+    JobRequirement.find((err, data)=>{
+        res.json(data);
+    })
+});
+
+router.post('/',(req, res, next)=>{
+    let jobRequirement = new JobRequirement(req.body);
+    jobRequirement.save((err, job)=>{
+        if(err){
+            //console.log(err);
+            res.json("Error occured in saving : " + err);
+        }
+        else{
+            res.json(job);
+        }
+    })
+})
 
 module.exports = router; 
