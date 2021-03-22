@@ -6,6 +6,8 @@ var cors = require('cors');
 var path = require('path');
 var multer = require('multer');
 
+const login_signup_routes = require('./routes/login_signup_routes.js');
+
 var app = express();
 
 const route = require('./project-files/routes/routes');
@@ -35,6 +37,8 @@ app.use(express.urlencoded());
 
 //route will become localhost/api/'contact' etc
 app.use('/api/', route);
+
+app.use('/api/signup', login_signup_routes);
 
 
 //testing server 
