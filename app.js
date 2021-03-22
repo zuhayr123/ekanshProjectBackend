@@ -49,7 +49,7 @@ const storage = multer.diskStorage({
 
     filename: (req, file, callback) => {
         var time = Date.now()
-        callback(null, time + '.pdf')
+        callback(null, time + path.extname(file.originalname))
     }
 })
 
