@@ -4,31 +4,17 @@ var mongoose = require('mongoose');
 var bodyparser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
+var multer = require('multer');
 
 var app = express();
 
 const route = require('./project-files/routes/routes');
-
-//define a port number
-
-// const port = 3000;
 
 const serverUrl = "https://android-course.herokuapp.com/";
 //connect to mongoDb
 const uri = "mongodb+srv://Zuhayr:i5tk4EIMGKfy8w0j@cluster0.aiobn.mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true });
 
-//mongodb for internet usage
-
-// const MongoClient = require('mongodb').MongoClient;
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
-
-//on connection
 mongoose.connection.on('connected', () => {
     console.log('Connected to database mongodb');
 });
@@ -55,8 +41,41 @@ app.use('/api/', route);
 app.get('/', (req, res) => {
     res.send('foobar');
 })
-// app.listen(port,() => {
-//     console.log('Server started at port' + port);
-// });
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, 'uploads')
+    },
+
+    filename: (req, file, callback) => {
+        var time = Date.now()
+        callback(null, time + '.pdf')
+    }
+})
+
+var upload = multer({ storage: storage })
+
+app.post('/file', upload.array('userPdf', 1), (req, res, next) => {
+    console.log("The upload function was called with a file")
+    var array = [];
+
+    try {
+        for (let file of req.files) {
+            console.log(file)
+            var path = serverUrl + "file?file_name=" + file.filename
+            var photoRes = ({ url: path, photo_details: file })
+            array.push(photoRes);
+        }
+        res.send({ array, status: 'success' })
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(400).json({ msg: 'Unable to add pdf at this time, please try again later', array, status: 'Failure' });
+    }
+});
+
+app.get("/file", (req, res) => {
+    var image_name = req.param('file_name');
+    res.sendFile(path.join(__dirname, "./uploads/" + image_name));
+})
 
 .listen(process.env.PORT || 5000)
