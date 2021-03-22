@@ -10,7 +10,7 @@ var app = express();
 
 const route = require('./project-files/routes/routes');
 
-const serverUrl = "https://android-course.herokuapp.com/";
+const serverUrl = "https://ekansh-app-backend.herokuapp.com/";
 //connect to mongoDb
 const uri = "mongodb+srv://Zuhayr:i5tk4EIMGKfy8w0j@cluster0.aiobn.mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true });
