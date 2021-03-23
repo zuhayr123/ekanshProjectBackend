@@ -23,6 +23,22 @@ router.post('/users', (req, res, next) => {
     })
 })
 
+router.get('/login', (req,  res , next) =>{
+
+    var phone_number_in_param = req.param('phone_number');
+    var password_in_param = req.param('password');  
+
+    UserDetails.findOne({phone_number: phone_number_in_param, password: password_in_param},function(erer, users){
+        if(users == "" || users == null){
+            res.status(403).json({msg: 'Check your ID and Password',users, status : 'loginFailure'});
+        }
+        else{
+            res.json({msg: 'Successfully logged in',users, status : 'success'});
+        }
+        
+    })
+});
+
 router.get('/users', (req, res, next) => {
     var phone_number = req.param('phone_number');
 
