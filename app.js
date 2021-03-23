@@ -23,7 +23,7 @@ mongoose.connection.on('connected', () => {
 
 //on error 
 mongoose.connection.on('error', (err) => {
-    if(err){
+    if (err) {
         console.log('Connected to database mongodb');
     }
 });
@@ -59,21 +59,20 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-app.post('/file', upload.array('userPdf', 1), (req, res, next) => {
+app.post('/file', upload.single('userPdf'), (req, res, next) => {
     console.log("The upload function was called with a file")
-    var array = [];
 
     try {
-        for (let file of req.files) {
-            console.log(file)
-            var path = serverUrl + "file?file_name=" + file.filename
-            var photoRes = ({ url: path, photo_details: file })
-            array.push(photoRes);
-        }
-        res.send({ array, status: 'success' })
+        var file = req.file;
+
+        console.log(file)
+        var path = serverUrl + "file?file_name=" + file.filename
+        var photoRes = ({ url: path, photo_details: file })
+
+        res.send({ photoRes, status: 'success' })
     } catch (error) {
         console.log(error);
-        res.sendStatus(400).json({ msg: 'Unable to add pdf at this time, please try again later', array, status: 'Failure' });
+        res.sendStatus(400).json({ msg: 'Unable to add pdf at this time, please try again later', photoRes, status: 'Failure' });
     }
 });
 
@@ -82,4 +81,4 @@ app.get("/file", (req, res) => {
     res.sendFile(path.join(__dirname, "./uploads/" + image_name));
 })
 
-.listen(process.env.PORT || 5000)
+    .listen(process.env.PORT || 5000)
