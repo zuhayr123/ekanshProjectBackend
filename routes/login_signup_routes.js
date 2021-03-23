@@ -23,4 +23,23 @@ router.post('/users', (req, res, next) => {
     })
 })
 
+router.get('/users', (req, res, next) => {
+    var phone_number = req.param('phone_number');
+
+    UserDetails.find({phone_number : phone_number},function(erer, users){
+        if(erer){
+            res.status(403).json({msg: 'Error in fetching user data', user : users , status : 'failure'});
+        }
+        else{
+            res.json({msg : 'Successfully fecthed all users', user : users, status : 'success'});
+        }
+    })
+})
+
+router.get('/all_users', (req, res, next) => {
+    UserDetails.find(function(erer, users){
+        res.json({msg : 'Successfully fecthed all users', user : users, status : 'success'});
+    })
+})
+
 module.exports = router; 
