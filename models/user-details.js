@@ -32,6 +32,11 @@ const UserDetailsSchema = mongoose.Schema({
     user_photo:{
         type : String,
         required: false
+    },
+
+    is_sub:{
+        type : String,
+        required: false
     }
 });
 
