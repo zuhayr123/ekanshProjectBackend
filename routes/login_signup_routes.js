@@ -39,6 +39,19 @@ router.get('/login', (req, res, next) => {
     })
 });
 
+router.get('/profile', (req, res, next) => {
+    var phone_number = req.param('phone_number');
+
+    UserDetails.findOne({ phone_number: phone_number }, function (erer, users) {
+        if (erer || users == null) {
+            res.status(403).json({ msg: 'The user does not exists', user: users, status: 'failure' });
+        }
+        else {
+            res.json({ msg: 'Successfully fetched all users', user: users, status: 'success' });
+        }
+    })
+})
+
 router.get('/users', (req, res, next) => {
     var phone_number = req.param('phone_number');
 
