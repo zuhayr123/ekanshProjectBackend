@@ -69,6 +69,20 @@ router.get('/all_users', (req, res, next) => {
     UserDetails.find(function (erer, users) {
         res.json({ msg: 'Successfully fecthed all users', user: users, status: 'success' });
     })
-})
+});
+
+router.put('/sub', (req, res, next) =>{
+    var phone_number_in_param = req.param('phone_number')
+
+    UserDetails.updateOne({phone_number : phone_number_in_param}, {is_sub : true},function(erer, user){
+
+        if(erer){
+            res.status(403).json({msg: 'Error in updating data', user : req.body , status : 'failure'});
+        }
+        else{
+            res.json({msg : 'User Successfuly Updated', user : req.body, status : 'success'});
+        }
+    })
+});
 
 module.exports = router; 
